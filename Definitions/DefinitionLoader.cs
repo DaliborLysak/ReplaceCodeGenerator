@@ -1,9 +1,9 @@
 using System.Reflection;
 using System.Text.Json;
 
-namespace ReplaceCodeGenerator
+namespace ReplaceCodeGenerator.Definitions
 {
-    public class DefinitionLoader
+    internal class DefinitionLoader : IDefinitionLoader
     {
         private const string DEFINITION_FILE_NAME = "definition.json";
         private const string REPLACE_CODE_GENERATOR = "ReplaceCodeGenerator";
@@ -32,7 +32,7 @@ namespace ReplaceCodeGenerator
             var definitionFolder = folder;
 
             if (string.IsNullOrEmpty(definitionFolder))
-                definitionFolder = this.GetDefinitionFolder();
+                definitionFolder = GetDefinitionFolder();
 
             if (string.IsNullOrEmpty(definitionFolder))
                 return;
