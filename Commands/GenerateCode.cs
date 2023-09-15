@@ -47,7 +47,7 @@ namespace ReplaceCodeGenerator.Commands
                 lineNumber++;
             }
 
-            var fileName = Path.GetFileName(this.DoReplace(path, replacement).ToLowerInvariant());
+            var fileName = Path.GetFileName(this.DoReplace(path, replacement));
             var newFile = Path.Combine(destination, fileName);
             File.WriteAllLines(newFile, lines, Encoding.UTF8);
         }
