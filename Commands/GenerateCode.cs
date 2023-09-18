@@ -36,7 +36,7 @@ namespace ReplaceCodeGenerator.Commands
 
         private void GenerateFile(string path, string destination, Replacement replacement)
         {
-            var lines = File.ReadAllLines(path, Encoding.UTF8);
+            var lines = File.ReadAllLines(path);
             var lineNumber = 0;
 
             while (lineNumber < lines.Length)
@@ -49,7 +49,7 @@ namespace ReplaceCodeGenerator.Commands
 
             var fileName = Path.GetFileName(this.DoReplace(path, replacement));
             var newFile = Path.Combine(destination, fileName);
-            File.WriteAllLines(newFile, lines, Encoding.UTF8);
+            File.WriteAllLines(newFile, lines);
         }
 
         private string DoReplace(string line, Replacement replacement)
