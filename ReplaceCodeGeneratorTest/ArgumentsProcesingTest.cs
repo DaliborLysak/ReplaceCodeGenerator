@@ -69,12 +69,12 @@ namespace ReplaceCodeGeneratorTest
                     "Hello how are you." },
                 new object[] {
                     new string[] { "-message", "Hello how are you.", "-nonsense", "-replacements", "replacement" },
-                    Array.Empty<string>(),
+                    new string[] { "replacement" },
                     "Hello how are you." },
                 new object[] {
-                    new string[] {  "-replacements", "replacement", "-nonsense", "-message", "Hello how are you." },
+                    new string[] { "-replacements", "replacement", "-nonsense", "-message", "Hello how are you." },
                     new string[] { "replacement" },
-                    string.Empty },
+                    "Hello how are you." },
             };
     }
 }
