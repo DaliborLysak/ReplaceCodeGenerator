@@ -2,7 +2,7 @@
 using ReplaceCodeGenerator.Replacer;
 using System.Xml.Linq;
 
-namespace ReplaceCodeGeneratorTest
+namespace ReplaceCodeGenerator.Tests
 {
     public class TextReplacerTest
     {
@@ -16,8 +16,11 @@ namespace ReplaceCodeGeneratorTest
         [InlineData("Test[0L]ForReplace", "TestargumentForReplace")]
         [InlineData("Test[0U]ForReplace", "TestARGUMENTForReplace")]
         [InlineData("Test[X_NOT_WORKING_X]ForReplace", "Test[X_NOT_WORKING_X]ForReplace")]
-        public void TestReplace(string input, string expected)
+        public void Replace(string input, string expected)
         {
+            // arrange
+
+            // act
             var actual = textReplacer.Replace(
                 input, 
                 new ReplaceCodeGenerator.Commands.Replacement() 
@@ -26,6 +29,8 @@ namespace ReplaceCodeGeneratorTest
                     Message = "Hello from Aardvark",
                     Replacements = new[] { "Argument" }
                 });
+
+            // assert
             Assert.Equal(expected, actual);
         }
     }

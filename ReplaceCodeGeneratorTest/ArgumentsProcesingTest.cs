@@ -5,27 +5,33 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using Xunit;
 
-namespace ReplaceCodeGeneratorTest
+namespace ReplaceCodeGenerator.Tests
 {
     public class ArgumentsProcesingTest
     {
         [Fact]
-        public void ParseGenerateDefinitionCommandTest()
+        public void ParseGenerateDefinitionCommand()
         {
+            // arrange
             var argumentParser = new ArgumentParser();
 
+            // act
             var command = argumentParser.ParseCommand(new[] { "generate-definition" });
 
+            // assert
             Assert.IsType<GenerateDefinition>(command);
         }
 
         [Fact]
-        public void ParseLoadDefinitionCommandTest()
+        public void ParseLoadDefinitionCommand()
         {
+            // arrange
             var argumentParser = new ArgumentParser();
 
+            // act
             var command = argumentParser.ParseCommand(new[] { "load-definition" });
 
+            // assert
             Assert.IsType<LoadDefinition>(command);
         }
 
@@ -34,22 +40,28 @@ namespace ReplaceCodeGeneratorTest
         [InlineData("")]
         [InlineData("BLA", "BLA", "BLA")]
         [InlineData("BLA", "BLA", "BLA", "BLA")]
-        public void ParseCommandFailTest(params string[] argument)
+        public void ParseCommandFail(params string[] argument)
         {
+            // arrange
             var argumentParser = new ArgumentParser();
 
+            // act
             var command = argumentParser.ParseCommand(argument);
 
+            // assert
             Assert.Null(command);
         }
 
         [Theory, MemberData(nameof(Replacements))]
         public void ParseReplacements(string[] input, string[] replacementsExpected, string messageExpected)
         {
+            // arrange
             var argumentParser = new ArgumentParser();
 
+            // act
             (var replacementsActual, var messageActual) = argumentParser.ParseReplacements(input);
 
+            // assert
             Assert.Equal(messageExpected, messageActual);
             Assert.Equal(replacementsExpected, replacementsActual);
         }
