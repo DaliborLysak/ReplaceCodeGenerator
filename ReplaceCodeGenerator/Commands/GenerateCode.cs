@@ -1,4 +1,5 @@
 ﻿using ReplaceCodeGenerator.Definitions;
+using ReplaceCodeGenerator.Replacer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +11,13 @@ namespace ReplaceCodeGenerator.Commands
 {
     internal class GenerateCode : ICommand
     {
+        private readonly ITextReplacer textReplacer;
+
+        public GenerateCode(ITextReplacer textReplacer)
+        {
+            this.textReplacer = textReplacer;
+        }
+
         public Data Run(IDefinitionLoader definitionLoader, Data data)
         {
             if (data is null)
@@ -42,29 +50,14 @@ namespace ReplaceCodeGenerator.Commands
             while (lineNumber < lines.Length)
             {
                 var line = lines[lineNumber];
-                lines[lineNumber] = DoReplace(line, replacement);
+                lines[lineNumber] = this.textReplacer.Replace(line, replacement);
 
                 lineNumber++;
             }
 
-            var fileName = Path.GetFileName(this.DoReplace(path, replacement));
+            var fileName = Path.GetFileName(this.textReplacer.Replace(path, replacement));
             var newFile = Path.Combine(destination, fileName);
             File.WriteAllLines(newFile, lines);
-        }
-
-        private string DoReplace(string line, Replacement replacement)
-        {
-            line = line.Replace("<author>", replacement.Author);
-            line = line.Replace("{date.}", DateTime.Now.ToString("dd.MM.yyyy"));
-            line = line.Replace("{date-}", DateTime.Now.ToString("dd-MM-yyyy"));
-            line = line.Replace("[message]", replacement.Message);
-
-            // TODO - louzy because of time pressure
-            line = line.Replace("[0]", replacement.Arguments.Length > 0 ? replacement.Arguments[0] : string.Empty);
-            line = line.Replace("[0U]", replacement.Arguments.Length > 0 ? replacement.Arguments[0].ToUpper() : string.Empty);
-            line = line.Replace("[0L]", replacement.Arguments.Length > 0 ? replacement.Arguments[0].ToLower() : string.Empty);
-
-            return line;
         }
     }
 }

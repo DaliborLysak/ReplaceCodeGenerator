@@ -4,6 +4,6 @@
     {
         public string Author { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
-        public string[] Arguments { get; set; } = new string[0];
+        public string[] Replacements { get; set; } = new string[0];
     }
 }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ReplaceCodeGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "ReplaceCodeGenerator.exe -replacements MTVAWinProCosTest -message \"REQ014656 W18 - interface MTVAWinProCos (KEEP)\""
+    }
+  }
+}
