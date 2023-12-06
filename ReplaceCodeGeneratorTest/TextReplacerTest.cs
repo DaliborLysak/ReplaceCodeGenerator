@@ -33,5 +33,25 @@ namespace ReplaceCodeGenerator.Tests
             // assert
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData("Test[1]ForReplace", "TestYyForReplace")]
+        [InlineData("Test[0L]For[1U]Replace", "TestxxForYYReplace")]
+        [InlineData("Test[1L]For[0U]Replace[2]", "TestyyForXXReplaceZz")]
+        public void MultiArgumentReplace(string input, string expected)
+        {
+            // arrange
+
+            // act
+            var actual = textReplacer.Replace(
+                input,
+                new ReplaceCodeGenerator.Commands.Replacement()
+                {
+                    Replacements = new[] { "Xx", "Yy", "Zz" }
+                });
+
+            // assert
+            Assert.Equal(expected, actual);
+        }
     }
 }
