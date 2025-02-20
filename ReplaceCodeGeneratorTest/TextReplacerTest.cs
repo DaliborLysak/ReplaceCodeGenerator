@@ -6,7 +6,7 @@ namespace ReplaceCodeGenerator.Tests
 {
     public class TextReplacerTest
     {
-        private readonly ITextReplacer textReplacer = new TextReplacer();
+        private readonly TextReplacer textReplacer = new();
 
         [Theory]
         [InlineData("Hi my name is <author>.", "Hi my name is Aardvark.")]
@@ -27,7 +27,7 @@ namespace ReplaceCodeGenerator.Tests
                 { 
                     Author = "Aardvark",
                     Message = "Hello from Aardvark",
-                    Replacements = new[] { "Argument" }
+                    Replacements = ["Argument"]
                 });
 
             // assert

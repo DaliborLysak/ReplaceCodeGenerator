@@ -8,7 +8,7 @@ namespace ReplaceCodeGenerator.Argument
         private const string GENERATE_DEFINITION = "generate-definition";
         private const string LOAD_DEFINITION = "load-definition";
 
-        private static readonly Dictionary<string, Func<ICommand>> commandCatalog = new Dictionary<string, Func<ICommand>>()
+        private static readonly Dictionary<string, Func<ICommand>> commandCatalog = new()
         {
             [GENERATE_DEFINITION] = () => new GenerateDefinition(),
             [LOAD_DEFINITION] = () => new LoadDefinition(),
@@ -31,6 +31,10 @@ namespace ReplaceCodeGenerator.Argument
         {
             var parsedReplacements = Array.Empty<string>();
             var parsedMessage = string.Empty;
+
+            // in case of one parameter is passed it is replacment
+            if (arguments.Length == 1)
+                return (replacements: arguments, message: string.Empty);
 
             var indexer = 0;
             while (indexer < arguments.Length)

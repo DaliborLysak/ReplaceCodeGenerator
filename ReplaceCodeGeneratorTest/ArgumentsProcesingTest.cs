@@ -16,7 +16,7 @@ namespace ReplaceCodeGenerator.Tests
             var argumentParser = new ArgumentParser();
 
             // act
-            var command = argumentParser.ParseCommand(new[] { "generate-definition" });
+            var command = argumentParser.ParseCommand(["generate-definition"]);
 
             // assert
             Assert.IsType<GenerateDefinition>(command);
@@ -29,7 +29,7 @@ namespace ReplaceCodeGenerator.Tests
             var argumentParser = new ArgumentParser();
 
             // act
-            var command = argumentParser.ParseCommand(new[] { "load-definition" });
+            var command = argumentParser.ParseCommand(["load-definition"]);
 
             // assert
             Assert.IsType<LoadDefinition>(command);
@@ -52,23 +52,10 @@ namespace ReplaceCodeGenerator.Tests
             Assert.Null(command);
         }
 
-        [Theory, MemberData(nameof(Replacements))]
-        public void ParseReplacements(string[] input, string[] replacementsExpected, string messageExpected)
-        {
-            // arrange
-            var argumentParser = new ArgumentParser();
-
-            // act
-            (var replacementsActual, var messageActual) = argumentParser.ParseReplacements(input);
-
-            // assert
-            Assert.Equal(messageExpected, messageActual);
-            Assert.Equal(replacementsExpected, replacementsActual);
-        }
-
         public static IEnumerable<object[]> Replacements =>
             new List<object[]>
             {
+                new object[] { new string[] { "replacement" }, new string[] { "replacement" }, ""},
                 new object[] { new string[] { "-message", "Hello how are you." }, Array.Empty<string>(), "Hello how are you."},
                 new object[] { new string[] { "-replacements", "replacement" }, new string[] { "replacement" }, string.Empty },
                 new object[] { 
@@ -88,5 +75,19 @@ namespace ReplaceCodeGenerator.Tests
                     new string[] { "replacement" },
                     "Hello how are you." },
             };
+
+        [Theory, MemberData(nameof(Replacements))]
+        public void ParseReplacements(string[] input, string[] replacementsExpected, string messageExpected)
+        {
+            // arrange
+            var argumentParser = new ArgumentParser();
+
+            // act
+            (var replacementsActual, var messageActual) = argumentParser.ParseReplacements(input);
+
+            // assert
+            Assert.Equal(messageExpected, messageActual);
+            Assert.Equal(replacementsExpected, replacementsActual);
+        }
     }
 }

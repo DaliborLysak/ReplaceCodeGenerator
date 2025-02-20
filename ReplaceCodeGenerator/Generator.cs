@@ -21,10 +21,9 @@ namespace ReplaceCodeGenerator
 
         public string Generate(string[] arguments)
         {
-            ICommand? command = null;
             var data = new Data();
 
-            command = this.argumentParser.ParseCommand(arguments);
+            var command = this.argumentParser.ParseCommand(arguments);
 
             if (command is null)
             {
